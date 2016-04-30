@@ -2,6 +2,7 @@ package com.example.glmgracy.currencies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,8 +19,12 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button mCalcButton;
@@ -30,6 +35,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public static final String FOR = "FOR_CURRENCY";
     public static final String HOM = "HOM_CURRENCY";
+
+    //this will contain my developers key
+    private String mKey;
+    //used to fetch the 'rates' json object from openexchangerates.org
+    public static final String RATES = "rates";
+    public static final String URL_BASE = "https://openexchangerates.org/api/latest.json?app_id=";
+    //used to format data from openexchangerates.org
+    public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00000");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //define behavior here
             }
         });
+        mKey = getKey("open_key");
     }
 
     private int findPositionGivenCode(String code, String[] currencies){
@@ -92,6 +107,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private String extractCodeFromCurrency(String currency) {
         return (currency).substring(0, 3);
+    }
+
+    private String getKey(String keyName){
+        AssetManager assetManager = this.getResources().getAssets();
+        Properties properties = new Properties();
+        InputStream inputStream = null;
+        try {
+            inputStream = assetManager.open("keys.properties");
+            properties.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return properties.getProperty(keyName);
     }
 
     public boolean isOnline(){
