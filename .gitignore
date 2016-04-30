@@ -1,0 +1,59 @@
+#ignore files
+*.zip
+*.pdf
+*.rar
+
+#Build application files
+*.apk
+*.ap_
+
+#Files for the Dalvik VM
+*.dex
+
+#Java class files
+*.class
+
+#Generated files
+bin/
+gen/
+
+#Gradle files
+.gradle/
+build/
+*/build/
+
+#Local configuration file (sdk path, etc)
+local.properties
+
+#Log files
+*.log
+
+#IDEA
+*.iml
+.idea/.name
+.idea/encodings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/libraries
+
+#python
+.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+#windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+
+#OSX
+*.DS_Store
