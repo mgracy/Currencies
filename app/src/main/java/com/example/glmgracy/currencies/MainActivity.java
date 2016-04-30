@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private EditText mAmountEditText;
     private Spinner mForSpinner, mHomSpinner;
     private String[] mCurrencies;
+
+    public static final String FOR = "FOR_CURRENCY";
+    public static final String HOM = "HOM_CURRENCY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         mHomSpinner.setOnItemSelectedListener(this);
         mForSpinner.setOnItemSelectedListener(this);
+
+        //set to shared-preferences or pull from shared-preferences on restart
+        if(savedInstanceState == null
+                && (PrefsMgr.getString(this, FOR) == null
+                && PrefsMgr.getString(this, HOM) == null)){
+            mForSpinner.setSelection(findPositionGivenCode("CNY", mCurrencies));
+            mHomSpinner.setSelection(findPositionGivenCode("USD", mCurrencies));
+
+            PrefsMgr.setString(this, FOR, "CNY");
+            PrefsMgr.setString(this, HOM, "USD");
+        }else{
+            mForSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this, FOR), mCurrencies));
+            mHomSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this, HOM), mCurrencies));
+        }
     }
 
     private int findPositionGivenCode(String code, String[] currencies){
@@ -121,12 +138,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()){
             case R.id.spn_for:
+                PrefsMgr.setString(this, FOR, extractCodeFromCurrency((String)mForSpinner.getSelectedItem()));
                 break;
             case R.id.spn_hom:
+                PrefsMgr.setString(this, HOM, extractCodeFromCurrency((String)mHomSpinner.getSelectedItem()));
                 break;
             default:
                 break;
         }
+
+        mConvertedTextView.setText("");
+
+        PrefsMgr.setString(this, FOR, extractCodeFromCurrency((String)mForSpinner.getSelectedItem()));
+        PrefsMgr.setString(this, HOM, extractCodeFromCurrency((String)mHomSpinner.getSelectedItem()));
     }
 
     @Override
