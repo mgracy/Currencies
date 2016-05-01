@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if(strHomCode.equalsIgnoreCase("USD")){
                     dCalculated = Double.parseDouble(strAmount) / jsonRates.getDouble(strForCode);
                 } else if(strForCode.equalsIgnoreCase("USD")){
-                    dCalculated = Double.parseDouble(strAmount) / jsonRates.getDouble(strHomCode);
+                    dCalculated = Double.parseDouble(strAmount) * jsonRates.getDouble(strHomCode);
                 } else{
                     dCalculated = Double.parseDouble(strAmount) * jsonRates.getDouble(strHomCode)
                             / jsonRates.getDouble(strForCode);
