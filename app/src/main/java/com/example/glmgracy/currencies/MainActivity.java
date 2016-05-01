@@ -250,8 +250,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
             catch (JSONException e) {
-                Toast.makeText(MainActivity.this, "There's been a JSON exception: " + e.getMessage(),
-                        , Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "There's been a JSON exception: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 mConvertedTextView.setText("");
                 e.printStackTrace();
             }
