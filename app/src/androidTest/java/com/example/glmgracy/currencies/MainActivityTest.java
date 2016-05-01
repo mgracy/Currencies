@@ -1,10 +1,13 @@
 package com.example.glmgracy.currencies;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by glmgracy on 16/5/1.
@@ -24,6 +27,15 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        //pass bogus currencies
+        ArrayList<String> bogusCurrencies = new ArrayList<>();
+        bogusCurrencies.add("USD|United States Dollar");
+        bogusCurrencies.add("EUR|Euro");
+        Intent intent = new Intent();
+        intent.putExtra(SplashActivity.KEY_ARRAYLIST, bogusCurrencies);
+        setActivityIntent(intent);
+
         //get the activity under test
         mMainActivity = getActivity();
         //assign references to our views
